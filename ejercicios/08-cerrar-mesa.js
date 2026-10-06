@@ -25,9 +25,26 @@ const { soloDisponibles } = require("./03-solo-disponibles");
 const { agregarAlPedido } = require("./05-agregar-al-pedido");
 const { calcularCuenta } = require("./07-calcular-cuenta");
 
-function cerrarMesa(menu, numeros) {
   // Tu código aquí
+function cerrarMesa(menu, numeros) {
+  // 1. Carta del día (solo disponibles)
+  let carta = soloDisponibles(menu);
+  
+  // 2. Pedido vacío
+  let pedido = [];
+  
+  // 3. Agregar cada número al pedido
+  for (let i = 0; i < numeros.length; i++) {
+    agregarAlPedido(pedido, carta, numeros[i]);
+  }
+  
+  // 4. Retornar objeto
+  return {
+    cantidadPlatos: pedido.length,
+    total: calcularCuenta(pedido)
+  };
 }
+
 
 // No borres esta línea: es la puerta por donde el test usa tu función
 module.exports = { cerrarMesa };
